@@ -1,10 +1,5 @@
 FROM ruby:3.2.2-bookworm
 
-WORKDIR /workspace
-COPY ./Gemfile* ./
-RUN bundle install
-COPY . .
-
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -20,5 +15,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 
+WORKDIR /workspace
+COPY ./Gemfile* ./
+RUN bundle install
+COPY . .
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
